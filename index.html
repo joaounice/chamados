@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitações - Secretaria Acadêmica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- VARIÁVEIS DE CORES REFINADAS (Ajustadas para melhor contraste e profissionalismo) --- */
+        :root {
+            --primary-color: #004073; /* Azul corporativo mais profundo */
+            --secondary-color: #004073; /* Ciano/Teal levemente mais calmo */
+            --background-color: #fcfdfe; 
+            --text-color: #212529; /* Mais escuro para melhor legibilidade */
+            --light-gray: #e9ecef; 
+            --medium-gray: #6c757d;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Sombra mais projetada */
+            --error-color: #dc3545;
+        }
+        
+        /* --- ESTILOS GLOBAIS MINIMALISTAS --- */
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- CABEÇALHO (Header) --- */
+        .top-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 18px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top-header h1 {
+            margin: 0;
+            font-size: 1.6em; /* Aumentado sutilmente */
+            font-weight: 600; /* Mais peso */
+        }
+        .language-select {
+            opacity: 0.8;
+            font-size: 0.9em;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 6px;
+            transition: opacity 0.2s;
+        }
+        .language-select:hover {
+            opacity: 1;
+        }
+        
+        /* --- BREADCRUMB --- */
+        .breadcrumb {
+            background-color: #fff;
+            padding: 15px 80px;
+            border-bottom: 1px solid var(--light-gray);
+            font-size: 0.85em;
+        }
+        .breadcrumb a {
+            color: var(--medium-gray);
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .breadcrumb span {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        /* --- CONTEÚDO PRINCIPAL (Main Content) --- */
+        .main-content {
+            flex-grow: 1; 
+            text-align: center;
+            padding: 60px 40px 100px 40px;
+        }
+        .main-content h2 {
+            font-weight: 400; /* Mais leve na tela de boas-vindas */
+            font-size: 2.8em; /* Levemente maior */
+            margin-bottom: 70px; 
+            color: var(--text-color);
+        }
+
+        /* --- CARDS DE OPÇÃO (Ações Primárias) --- */
+        .option-cards {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 12px; 
+            padding: 40px 30px; /* Ajustado */
+            width: 350px; /* Levemente mais largo */
+            box-shadow: var(--card-shadow); 
+            text-align: left;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-start;
+            border: 1px solid #f0f0f0; 
+        }
+        .card:hover {
+            transform: translateY(-8px); /* Efeito de subida mais pronunciado */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); /* Sombra maior no hover */
+            border-color: var(--secondary-color); 
+        }
+
+        /* Ícone com Destaque Secundário */
+        .card-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 60px; /* Maior */
+            height: 60px; /* Maior */
+            border-radius: 50%; 
+            background-color: #e6ffff; /* Cor de fundo mais clara para o ícone */
+            color: var(--secondary-color);
+            font-size: 2.2em; /* Ícone maior */
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .card-content h3 {
+            margin: 0;
+            font-size: 1.4em; /* Maior */
+            font-weight: 600;
+            color: var(--primary-color); 
+            line-height: 1.2;
+        }
+        .card-content p {
+            margin: 8px 0 0 0;
+            font-size: 0.95em;
+            color: var(--medium-gray);
+            line-height: 1.5;
+        }
+
+        /* --- LINK ADMINISTRATIVO (Botão Secundário) --- */
+        .admin-link a {
+            font-size: 1em;
+            font-weight: 600;
+            color: var(--primary-color);
+            padding: 12px 30px; /* Ajustado */
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+            display: inline-block;
+        }
+        .admin-link a:hover {
+            text-decoration: none;
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 64, 115, 0.3);
+        }
+        
+        /* --- RODAPÉ (Footer) --- */
+        .footer {
+            text-align: center;
+            padding: 25px 0;
+            font-size: 0.85em;
+            color: #999;
+            border-top: 1px solid var(--light-gray);
+            background-color: #fff;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* Aumentado o espaçamento */
+        }
+
+        .footer-copyright {
+            font-size: 0.85em;
+            color: var(--medium-gray);
+            font-weight: 400;
+        }
+
+        .footer-links a {
+            color: var(--medium-gray);
+            margin: 0 12px;
+            font-weight: 500;
+        }
+        .footer-links a:hover {
+             color: var(--primary-color);
+        }
+
+        .iso-certification {
+            padding-top: 15px;
+        }
+        .iso-certification img {
+            height: 40px; /* Maior */
+            opacity: 0.9;
+        }
+
+        /* --- FORM STYLING --- */
+        .form-container {
+            max-width: 1000px; /* Ajuste para melhor proporção em telas grandes */
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 50px 40px; /* Aumentado o padding */
+            text-align: left;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 25px;
+        }
+
+        .form-header h2 {
+            font-weight: 700;
+            font-size: 2em;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .form-header p {
+            color: var(--medium-gray);
+            font-size: 1em;
+            margin-top: 10px;
+        }
+
+        .form-section-title {
+            font-size: 1.3em; /* Maior */
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin: 35px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 3px solid #e0f7fa; /* Borda mais suave */
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600; /* Mais peso */
+            margin-bottom: 8px;
+            color: var(--text-color);
+            font-size: 1em;
+        }
+
+        .form-group label.required::after {
+            content: " *"; /* Apenas asterisco */
+            color: var(--error-color); 
+            font-weight: 700;
+            margin-left: 5px;
+        }
+
+        input[type="text"], 
+        input[type="email"], 
+        input[type="date"], /* Adicionado o input[type="date"] aqui */
+        select, 
+        textarea {
+            width: 100%;
+            padding: 14px; /* Aumentado */
+            border: 1px solid #ced4da; /* Borda mais definida */
+            border-radius: 8px;
+            font-size: 1em;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+            background-color: #fff; /* Fundo branco puro */
+        }
+        
+        /* Cor de fundo leve no hover e focus */
+        input[type="text"]:hover, 
+        input[type="email"]:hover, 
+        input[type="date"]:hover,
+        select:hover, 
+        textarea:hover {
+             background-color: #f8f9fa;
+        }
+
+        input[type="text"]:focus, 
+        input[type="email"]:focus, 
+        input[type="date"]:focus,
+        select:focus, 
+        textarea:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 4px rgba(0, 153, 168, 0.2); /* Sombra de foco mais sutil */
+            outline: none;
+            background-color: white;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 150px; /* Aumentado */
+        }
+
+        select:required:invalid {
+            color: var(--medium-gray);
+        }
+        option[value=""][disabled] {
+            display: none;
+        }
+
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            gap: 15px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .form-submit-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 14px 30px; /* Aumentado */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1em;
+            transition: background-color 0.2s, color 0.2s, opacity 0.2s;
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .btn-primary:hover:not(:disabled) {
+            background-color: #003057; 
+        }
+
+        .btn-secondary, .btn-back {
+            background-color: #f1f3f5; /* Cinza mais claro */
+            color: var(--text-color);
+            border: 1px solid #dee2e6;
+        }
+        .btn-secondary:hover:not(:disabled), .btn-back:hover:not(:disabled) {
+            background-color: #e2e6ea; 
+        }
+        
+        /* Specific styling for validation messages */
+        .validation-message {
+            color: var(--error-color);
+            font-size: 0.9em;
+            margin-top: 8px; /* Mais espaço para não ficar colado no input */
+            display: none; 
+            font-weight: 500;
+            padding-left: 5px;
+        }
+        
+        /* --- ESTILOS DO MODAL DE SUCESSO (NOVO) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.is-visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.is-visible .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            font-size: 3.5em;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .modal-content h3 {
+            color: var(--primary-color);
+            font-size: 1.6em;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .ticket-number {
+            font-size: 2em;
+            font-weight: 800;
+            color: var(--error-color); /* Destaque em cor contrastante */
+            background-color: #e6ffff;
+            border: 2px solid var(--secondary-color);
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin: 15px 0 30px 0;
+            letter-spacing: 1px;
+        }
+
+        .modal-content p {
+            color: var(--text-color);
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+
+        .btn-modal-close {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .btn-modal-close:hover {
+            background-color: #003057;
+        }
+
+        /* --- MEDIA QUERIES para Responsividade --- */
+        @media (max-width: 1024px) {
+            .top-header, .breadcrumb {
+                padding: 15px 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-header, .breadcrumb {
+                padding: 15px 20px;
+            }
+            .main-content {
+                padding: 40px 20px;
+            }
+            .main-content h2 {
+                font-size: 2em;
+                margin-bottom: 40px;
+            }
+            .option-cards {
+                gap: 20px;
+            }
+            .card {
+                width: 100%; 
+                max-width: 450px;
+                padding: 30px 20px;
+            }
+            .admin-link a {
+                width: auto;
+            }
+            .form-container {
+                padding: 20px;
+            }
+            .form-actions {
+                flex-direction: column-reverse; 
+                gap: 10px;
+                align-items: stretch;
+            }
+            .form-submit-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+            .card-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.8em;
+                margin-right: 15px;
+            }
+            .ticket-number {
+                font-size: 1.6em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-header">
+        <h1>CHAMADOS SECRETARIA ACADÊMICA UNICESUMAR</h1>
+        </div>
+    </div>
+
+    <div class="breadcrumb">
+        <a href="#" onclick="showWelcome(); return false;">Solicitações - Secretaria Acadêmica</a> &gt; <span id="current-view-title">Solicitações</span>
+    </div>
+
+    <div class="main-content">
+        
+        <div id="welcome-view">
+            <h2>Olá, como podemos lhe ajudar?</h2>
+
+            <div class="option-cards">
+                <div class="card" id="send-ticket-card">
+                    <div class="card-icon">
+                        🎫
+                    </div>
+                    <div class="card-content">
+                        <h3>Enviar um novo chamado</h3>
+                        <p>Crie um novo ticket de suporte para o departamento certo.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">
+                        📢
+                    </div>
+                    <div class="card-content">
+                        <h3>Acompanhar meus chamados</h3>
+                        <p>Visualize o status, interaja com a equipe e confira o histórico de todos os tickets abertos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-link">
+                <a href="#">Ir ao painel administrativo</a>
+            </div>
+        </div>
+        
+        <div id="form-view" style="display: none;">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>Formulário para Registro de Solicitações</h2>
+                    <p>Preencha os campos abaixo com as informações necessárias para registrar seu novo chamado.</p>
+                </div>
+
+                <form id="request-form">
+                    
+                    <h3 class="form-section-title">DADOS DO SOLICITANTE</h3>
+
+                    <div class="form-group">
+                        <label for="nome" class="required">Nome do solicitante</label>
+                        <input type="text" id="nome" name="nome" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="required">E-mail do solicitante</label>
+                        <input type="email" id="email" name="email" required placeholder="exemplo.sobrenome@vitru.com.br" oninput="validateEmail()">
+                        <p id="email-validation-msg" class="validation-message">O e-mail deve seguir o padrão nome.sobrenome@vitru.com.br.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="area" class="required">Área / Setor</label>
+                        <input type="text" id="area" name="area" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gestor" class="required">Gestor responsável</label>
+                        <input type="text" id="gestor" name="gestor" required>
+                    </div>
+
+                    <h3 class="form-section-title">DETALHES DA SOLICITAÇÃO</h3>
+
+                    <div class="form-group">
+                        <label for="titulo" class="required">Título da solicitação</label>
+                        <input type="text" id="titulo" name="titulo" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="data_solicitacao" class="required">Data da solicitação</label>
+                        <input type="date" id="data_solicitacao" name="data_solicitacao" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo" class="required">Tipo da solicitação</label>
+                        <select id="tipo" name="tipo" required>
+                            <option value="" disabled selected>Selecione...</option>
+                            <option value="melhorias">MELHORIAS</option>
+                            <option value="problemas">PROBLEMAS</option>
+                            <option value="novo_projeto">NOVO PROJETO</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="impacto" class="required">Impacto da solicitação</label>
+                        <select id="impacto" name="impacto" required>
+                            <option value="" disabled selected>Selecione...</option>
+                            <option value="baixo">BAIXO</option>
+                            <option value="medio">MÉDIO</option>
+                            <option value="alto">ALTO</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="area_solicitacao" class="required">ÁREA para análise da solicitação</label>
+                        <select id="area_solicitacao" name="area_solicitacao" required>
+                            <option value="" disabled selected>Selecione...</option>
+                            <option value="bi">BUSINESS INTELLIGENCE</option>
+                            <option value="projetos">PROJETOS</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descricao" class="required">Descrição detalhada do que precisa</label>
+                        <textarea id="descricao" name="descricao" required></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-back" onclick="showWelcome()">← Voltar</button>
+                        <div class="form-submit-buttons">
+                            <button type="submit" class="btn btn-primary" id="submit-button">Enviar Solicitação</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 2025 Secretaria Acadêmica Unicesumar | Desenvolvimento e Qualidade | João Vitor Silvério
+            </div>
+
+            <div class="footer-links">
+                <a href="#">Privacidade</a> | 
+                <a href="#">Termos de Uso</a> |
+                <a href="#">Ajuda</a>
+            </div>
+    
+    <div class="modal-overlay" id="success-modal">
+        <div class="modal-content">
+            <div class="modal-icon">✅</div>
+            <h3>Chamado Registrado com Sucesso!</h3>
+            <p>Anote o **número do seu chamado** para acompanhar o progresso:</p>
+            <div class="ticket-number" id="ticket-number-display"></div>
+            <button type="button" class="btn btn-modal-close" onclick="closeModal()">Entendi</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const welcomeView = document.getElementById('welcome-view');
+            const formView = document.getElementById('form-view');
+            const sendTicketCard = document.getElementById('send-ticket-card');
+            const currentViewTitle = document.getElementById('current-view-title');
+            const requestForm = document.getElementById('request-form');
+            const emailInput = document.getElementById('email');
+            const emailValidationMsg = document.getElementById('email-validation-msg');
+            
+            // Variáveis do Modal (Novo)
+            const successModal = document.getElementById('success-modal');
+            const ticketNumberDisplay = document.getElementById('ticket-number-display');
+
+
+            // 1. Função para exibir a tela de boas-vindas
+            window.showWelcome = () => {
+                welcomeView.style.display = 'block';
+                formView.style.display = 'none';
+                currentViewTitle.textContent = 'Solicitações';
+                document.querySelector('.main-content h2').textContent = 'Olá, como podemos lhe ajudar?';
+            };
+
+            // 2. Função para exibir o formulário
+            const showForm = () => {
+                welcomeView.style.display = 'none';
+                formView.style.display = 'block';
+                currentViewTitle.textContent = 'Novo Chamado';
+                document.querySelector('.main-content h2').textContent = ''; 
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                emailValidationMsg.style.display = 'none';
+                emailInput.setCustomValidity(''); 
+            };
+
+            // Evento de clique no Card "Enviar um chamado"
+            sendTicketCard.addEventListener('click', showForm);
+
+            // --- Funções do Modal (Novo) ---
+            window.showModal = (ticketNumber) => {
+                ticketNumberDisplay.textContent = ticketNumber;
+                successModal.classList.add('is-visible');
+            };
+
+            window.closeModal = () => {
+                successModal.classList.remove('is-visible');
+                requestForm.reset(); // Limpa o formulário
+                showWelcome(); // Volta para a tela principal
+            };
+            // ---------------------------------
+
+
+            // 3. Validação de Email (nome.sobrenome@vitru.com.br)
+            window.validateEmail = () => {
+                const email = emailInput.value.trim();
+                // Expressão regular: nome.sobrenome@vitru.com.br (Permite múltiplos nomes/sobrenomes separados por ponto)
+                const regex = /^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*@vitru\.com\.br$/i; 
+
+                if (email === '') {
+                    emailValidationMsg.style.display = 'none';
+                    emailInput.setCustomValidity(''); 
+                    return true;
+                } else if (!regex.test(email)) {
+                    emailValidationMsg.style.display = 'block';
+                    // Define uma mensagem de erro customizada para o HTML5
+                    emailInput.setCustomValidity('E-mail inválido. Utilize o formato nome.sobrenome@vitru.com.br');
+                    return false;
+                } else {
+                    emailValidationMsg.style.display = 'none';
+                    emailInput.setCustomValidity('');
+                    return true;
+                }
+            };
+            
+
+            // 4. Tratamento do Submit do Formulário (ENVIANDO PARA A API)
+            requestForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Força a revalidação do email e do formulário antes de submeter
+                if (!validateEmail() || !requestForm.checkValidity()) {
+                    if (!validateEmail()) emailInput.focus();
+                    return; 
+                }
+                
+                const submitBtn = document.getElementById('submit-button');
+                submitBtn.textContent = 'Enviando...';
+                submitBtn.disabled = true;
+                
+                // Coleta os dados do formulário
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData.entries());
+
+                // URL da sua API de backend (Rodando na porta 3000, conforme index.js)
+                const API_URL = 'http://10.32.2.219:3000/api/chamados'; 
+
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        // NOVO: Chama o modal com o número do chamado retornado pelo backend
+                        console.log('SUCESSO: Chamado registrado com sucesso!', result);
+                        
+                        if (result.nm_chamado) {
+                            showModal(result.nm_chamado);
+                        } else {
+                            alert('SUCESSO: Chamado registrado, mas o número não foi retornado (Verifique o console).');
+                        }
+                        // Os comandos reset() e showWelcome() foram movidos para a função closeModal()
+                        
+                    } else {
+                        // Tratamento de erros de validação ou do servidor
+                        alert('ERRO ao enviar o chamado: ' + result.message + (result.details ? '\nDetalhes: ' + result.details : ''));
+                        console.error('ERRO:', result.message, result.details);
+                    }
+
+                } catch (error) {
+                    // Tratamento de erros de rede (ex: API está fora do ar)
+                    alert('ERRO de conexão com o servidor. Verifique se o backend (Node.js) está rodando em http://localhost:3000.');
+                    console.error('ERRO de rede:', error);
+                } finally {
+                    submitBtn.textContent = 'Enviar Solicitação';
+                    submitBtn.disabled = false;
+                }
+            });
+            
+            // Fechar o modal ao clicar no overlay
+            successModal.addEventListener('click', (e) => {
+                if (e.target.id === 'success-modal') {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
