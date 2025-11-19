@@ -3,1175 +3,1766 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitações - Secretaria Acadêmica</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>SECRETATIA ACADÊMICA</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+
     <style>
-        /* --- VARIÁVEIS DE CORES REFINADAS (Ajustadas para melhor contraste e profissionalismo) --- */
-        :root {
-            --primary-color: #004073; /* Azul corporativo mais profundo */
-            --secondary-color: #004073; /* Ciano/Teal levemente mais calmo */
-            --background-color: #fcfdfe; 
-            --text-color: #212529; /* Mais escuro para melhor legibilidade */
-            --light-gray: #e9ecef; 
-            --medium-gray: #6c757d;
-            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Sombra mais projetada */
-            --error-color: #dc3545;
-            --success-color: #28a745;
-        }
-        
-        /* --- ESTILOS GLOBAIS MINIMALISTAS --- */
-        body {
-            font-family: 'Inter', Arial, sans-serif;
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
             margin: 0;
             padding: 0;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            line-height: 1.6;
-        }
-
-        a {
-            text-decoration: none;
-            color: var(--secondary-color);
-            transition: color 0.2s;
-        }
-        a:hover {
-            color: var(--primary-color);
-        }
-
-        /* --- CABEÇALHO (Header) --- */
-        .top-header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 18px 80px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .top-header h1 {
-            margin: 0;
-            font-size: 1.6em; /* Aumentado sutilmente */
-            font-weight: 600; /* Mais peso */
-        }
-        .language-select {
-            opacity: 0.8;
-            font-size: 0.9em;
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 6px;
-            transition: opacity 0.2s;
-        }
-        .language-select:hover {
-            opacity: 1;
-        }
-        
-        /* --- BREADCRUMB --- */
-        .breadcrumb {
-            background-color: #fff;
-            padding: 15px 80px;
-            border-bottom: 1px solid var(--light-gray);
-            font-size: 0.85em;
-        }
-        .breadcrumb a {
-            color: var(--medium-gray);
-        }
-        .breadcrumb a:hover {
-            text-decoration: underline;
-        }
-        .breadcrumb span {
-            font-weight: 500;
-            color: var(--text-color);
-        }
-
-        /* --- CONTEÚDO PRINCIPAL (Main Content) --- */
-        .main-content {
-            flex-grow: 1; 
-            text-align: center;
-            /* AJUSTE: Aumentando o padding lateral para quando o conteúdo é full width */
-            padding: 60px 40px 100px 40px; 
-        }
-        .main-content h2 {
-            font-weight: 400; /* Mais leve na tela de boas-vindas */
-            font-size: 2.8em; /* Levemente maior */
-            margin-bottom: 70px; 
-            color: var(--text-color);
-        }
-
-        /* --- CARDS DE OPÇÃO (Ações Primárias) --- */
-        .option-cards {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            margin-bottom: 60px;
-            flex-wrap: wrap;
-        }
-        .card {
-            background-color: #fff;
-            border-radius: 12px; 
-            padding: 40px 30px; /* Ajustado */
-            width: 350px; /* Levemente mais largo */
-            box-shadow: var(--card-shadow); 
-            text-align: left;
-            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-            cursor: pointer;
-            display: flex;
-            align-items: flex-start;
-            border: 1px solid #f0f0f0; 
-        }
-        .card:hover {
-            transform: translateY(-8px); /* Efeito de subida mais pronunciado */
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); /* Sombra maior no hover */
-            border-color: var(--secondary-color); 
-        }
-
-        /* Ícone com Destaque Secundário */
-        .card-icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 60px; /* Maior */
-            height: 60px; /* Maior */
-            border-radius: 50%; 
-            background-color: #e6ffff; /* Cor de fundo mais clara para o ícone */
-            color: var(--secondary-color);
-            font-size: 2.2em; /* Ícone maior */
-            margin-right: 20px;
-            flex-shrink: 0;
-        }
-
-        .card-content h3 {
-            margin: 0;
-            font-size: 1.4em; /* Maior */
-            font-weight: 600;
-            color: var(--primary-color); 
-            line-height: 1.2;
-        }
-        .card-content p {
-            margin: 8px 0 0 0;
-            font-size: 0.95em;
-            color: var(--medium-gray);
-            line-height: 1.5;
-        }
-
-        /* --- LINK ADMINISTRATIVO (Botão Secundário) --- */
-        .admin-link a {
-            font-size: 1em;
-            font-weight: 600;
-            color: var(--primary-color);
-            padding: 12px 30px; /* Ajustado */
-            border: 2px solid var(--primary-color);
-            border-radius: 8px;
-            transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-            display: inline-block;
-        }
-        .admin-link a:hover {
-            text-decoration: none;
-            background-color: var(--primary-color);
-            color: white;
-            box-shadow: 0 4px 10px rgba(0, 64, 115, 0.3);
-        }
-        
-        /* --- RODAPÉ (Footer) --- */
-        .footer {
-            text-align: center;
-            padding: 25px 0;
-            font-size: 0.85em;
-            color: #999;
-            border-top: 1px solid var(--light-gray);
-            background-color: #fff;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px; /* Aumentado o espaçamento */
-        }
-
-        .footer-copyright {
-            font-size: 0.85em;
-            color: var(--medium-gray);
-            font-weight: 400;
-        }
-
-        .footer-links a {
-            color: var(--medium-gray);
-            margin: 0 12px;
-            font-weight: 500;
-        }
-        .footer-links a:hover {
-             color: var(--primary-color);
-        }
-
-        /* --- FORM / INPUT STYLING --- */
-        .form-container {
-            /* Padrão para os formulários: Form submission (menor) */
-            max-width: 900px; 
-            margin: 0 auto;
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: var(--card-shadow);
-            padding: 50px 40px; 
-            text-align: left;
-        }
-        
-        /* NOVO: Sobrescreve o estilo para a tela de acompanhamento (full width) */
-        #tracking-view .form-container {
-            max-width: 100%; /* Usa toda a largura do main-content */
-            box-shadow: none; /* Remove a caixa para um visual de página */
-            background-color: transparent; /* Remove o fundo branco */
-            padding: 0; /* Remove padding do container, usaremos o padding do main-content */
-        }
-        
-        /* Ajusta o header da tracking view para ficar alinhado */
-        #tracking-view .form-header {
-            padding-top: 50px;
-            padding-bottom: 25px;
-            margin-bottom: 0;
-            border-bottom: 2px solid var(--light-gray);
-        }
-        
-        /* AJUSTE DE LARGURA: CONTAINER PARA CENTRALIZAR O FORMULÁRIO DE BUSCA */
-        #tracking-search-container {
-            max-width: 1100px; /* AUMENTADO: Limita a largura do container de busca para dar mais espaço aos inputs */
-            margin: 0 auto; /* Centraliza o container na tela */
-            padding: 40px 0;
-        }
-
-        /* AJUSTES PARA ALINHAMENTO NA BUSCA */
-        #tracking-search-form {
-            max-width: 100%;
-            margin: 0;
-            display: flex;
-            gap: 15px;
-            align-items: flex-end; /* ALINHA TODOS OS ITENS DE FUNDO */
-        }
-        
-        /* Força os campos de busca a serem flex items */
-        #tracking-search-form > .form-group {
-             flex-grow: 1; 
-             margin-bottom: 0; /* Remove margem inferior para alinhamento perfeito */
-        }
-        
-        /* Ajusta o padding para que o input e o botão fiquem alinhados */
-        #tracking-search-form input[type="text"], 
-        #tracking-search-form input[type="email"],
-        #tracking-search-form .btn {
-            height: 48px; /* Altura forçada para todos os elementos de interação */
-            padding-top: 10px;
-            padding-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-
-        /* O resto dos estilos de formulário permanecem inalterados */
-        .form-header {
-            text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 2px solid var(--light-gray);
-            padding-bottom: 25px;
-        }
-        .form-header h2 {
-            font-weight: 700;
-            font-size: 2em;
-            color: var(--primary-color);
-            margin: 0;
-        }
-        .form-group {
-            margin-bottom: 25px;
-        }
-        .form-group label {
-            display: block;
-            font-weight: 600; 
-            margin-bottom: 8px;
-            color: var(--text-color);
-            font-size: 1em;
-        }
-        .form-group label.required::after {
-            content: " *"; 
-            color: var(--error-color); 
-            font-weight: 700;
-            margin-left: 5px;
-        }
-
-        input[type="text"], 
-        input[type="email"], 
-        input[type="date"], 
-        select, 
-        textarea {
-            width: 100%;
-            padding: 14px; 
-            border: 1px solid #ced4da; 
-            border-radius: 8px;
-            font-size: 1em;
             box-sizing: border-box;
-            transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
-            background-color: #fff; 
-        }
-        
-        input[type="text"]:focus, 
-        input[type="email"]:focus, 
-        select:focus, 
-        textarea:focus {
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 4px rgba(0, 153, 168, 0.2); 
-            outline: none;
-            background-color: white;
         }
 
-        .btn {
-            padding: 14px 30px; 
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1em;
-            transition: background-color 0.2s, color 0.2s, opacity 0.2s;
+        :root {
+            --body-color: #E4E9F7;
+            --sidebar-color: #FFFFFF;
+            --primary-color: #006299;
+            --primary-color-light: #F6F5FF;
+            --toggle-color: #DDD;
+            --text-color: #707070;
+            --card-bg: #FFFFFF;
+            --card-bg-lighter: #F6F8FC;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            
+            --login-bg-left: #353637;
+            --login-bg-right: #EBEBEB;
+            --button-color: #006299;
+            --link-color: #006299; 
+
+            --tran-02: all 0.2s ease;
+            --tran-03: all 0.3s ease;
+            --tran-04: all 0.4s ease;
+            --tran-05: all 0.5s ease;
         }
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
+
+        body.dark {
+            --body-color: #18191a;
+            --sidebar-color: #242526;
+            --primary-color: #006299;
+            --primary-color-light: #3a3b3c;
+            --toggle-color: #555;
+            --text-color: #CCCCCC;
+            --card-bg: #242526;
+            --card-bg-lighter: #18191a;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+            
+            --login-bg-left: #18191a;
+            --login-bg-right: #242526;
+            --text-color-login-right: #CCCCCC;
         }
-        .btn-primary:hover:not(:disabled) {
-            background-color: #003057; 
-        }
-        .btn-back {
-            background-color: #f1f3f5; 
-            color: var(--text-color);
-            border: 1px solid #dee2e6;
-        }
-        .btn-clear {
-            background-color: var(--error-color);
-            color: white;
-            white-space: nowrap;
-        }
-        .btn-clear:hover:not(:disabled) {
-            background-color: #c82333;
-        }
-        .btn-copy { /* Estilo para o botão de copiar nos modais */
-            background-color: #0099a8; 
-            color: white;
-            padding: 12px 30px;
-            margin-right: 15px; 
-        }
-        .btn-copy:hover {
-            background-color: #007a86;
-        }
-        
-        .form-actions {
-            display: flex;
-            justify-content: space-between; 
-            align-items: center;
-            gap: 15px;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid var(--light-gray);
-        }
-        .form-submit-buttons {
-            display: flex;
-            gap: 15px;
-        }
-        .validation-message {
-            color: var(--error-color);
-            font-size: 0.9em;
-            margin-top: 8px; 
-            display: none; 
-            font-weight: 500;
-            padding-left: 5px;
+
+        body {
+            min-height: 100vh;
+            background-color: var(--body-color);
+            transition: var(--tran-05);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
         }
         
-        /* --- ESTILOS DO MODAL DE SUCESSO E DESCRIÇÃO --- */
-        .modal-overlay {
+        #login-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
             display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .modal-overlay.is-visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
+            z-index: 2000;
             background-color: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-            max-width: 450px;
-            width: 90%;
-            text-align: center;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
         }
         
-        /* Ajuste para o modal de descrição ser maior */
-        #description-modal .modal-content {
-            max-width: 600px;
+        #login-screen.hidden {
+            display: none;
         }
 
-        .modal-overlay.is-visible .modal-content {
-            transform: scale(1);
+        .login-left {
+            width: 50%;
+            background-color: var(--login-bg-left);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px;
+            color: white;
+            background-image: url('https://drive.google.com/thumbnail?id=18LjHJpp0DzzsZYGy2gVgKHa6kI5_baZb&sz=w1000');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .login-left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        .login-left > * {
+            z-index: 2;
         }
 
-        .modal-icon {
-            font-size: 3.5em;
-            color: var(--secondary-color);
+        .login-title-section {
+            padding-top: 100px;
+        }
+        
+        .login-title-section h1 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+        
+        .login-title-section p {
+            font-size: 18px;
+            font-weight: 400;
+            margin-top: 15px;
+        }
+        
+        .login-logo-footer {
+            display: flex;
+            align-items: center;
+        }
+        
+        .login-logo-footer img {
+            width: 120px;
+            height: auto;
+            filter: brightness(0) invert(1);
+        }
+
+        .login-right {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--login-bg-right);
+            padding: 40px;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        .login-form-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 10px;
+            background: var(--card-bg);
+            box-shadow: var(--box-shadow);
+        }
+
+        .login-logo-main img {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+
+        .login-right h2 {
+            font-size: 24px;
+            margin-bottom: 25px;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .login-input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--toggle-color);
+            border-radius: 8px;
+            font-size: 16px;
+            background: var(--card-bg);
+            color: var(--text-color);
+            transition: var(--tran-03);
+        }
+        
+        .login-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 98, 153, 0.2);
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--text-color);
+            opacity: 0.6;
+            transition: var(--tran-03);
+        }
+
+        .toggle-password:hover {
+            opacity: 1;
+            color: var(--primary-color);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--button-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--tran-03);
+            margin-top: 10px;
+        }
+
+        .login-button:hover {
+            background-color: #004c77;
+        }
+        
+        .login-actions {
+            margin-top: 20px;
+        }
+
+        .login-actions a {
+            display: block;
+            font-size: 14px;
+            color: var(--link-color);
+            text-decoration: none;
+            margin-top: 10px;
+            transition: var(--tran-03);
+        }
+        
+        .login-actions a:hover {
+            text-decoration: underline;
+        }
+        
+        .login-footer-links {
+            position: absolute;
+            bottom: 20px;
+            color: var(--text-color);
+            font-size: 12px;
+            max-width: 450px;
+        }
+        
+        .login-footer-links a {
+            color: var(--link-color);
+            margin: 0 5px;
+        }
+
+        #main-content {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        #main-content.logged-in {
+            opacity: 1;
+        }
+
+
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            padding: 10px 14px;
+            background: var(--sidebar-color);
+            transition: var(--tran-05);
+            z-index: 1000;
+        }
+        .sidebar.close {
+            width: 88px;
+        }
+
+        .sidebar .text {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: var(--tran-03);
+            white-space: nowrap;
+            opacity: 1;
+        }
+        .sidebar.close .text {
+            opacity: 0;
+        }
+
+        .sidebar.close .sun-moon,
+        .sidebar.close .mode-text {
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--tran-05);
+        }
+
+
+        .sidebar header {
+            position: relative;
+        }
+        .sidebar .image-text {
+            display: flex;
+            align-items: center;
+
+        }
+
+        .sidebar .image-text .image img{
+            width: 75px;
+        }
+
+        .sidebar .image {
+            min-width: 60px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sidebar header .logo-icon {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        .sidebar .image-text .logo-text span{
+            display: flex;
+            align-items: center;
+        }
+        .sidebar header .toggle {
+            position: absolute;
+            top: 50%;
+            right: -25px;
+            transform: translateY(-50%) rotate(180deg);
+            height: 25px;
+            width: 25px;
+            background: var(--primary-color);
+            color: var(--sidebar-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--tran-03);
+        }
+        .sidebar.close header .toggle {
+            transform: translateY(-50%) rotate(0deg);
+        }
+        .sidebar .menu {
+            margin-top: 35px;
+        }
+        .sidebar li {
+            height: 50px;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .sidebar li .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 60px;
+            font-size: 20px;
+            color: var(--text-color);
+        }
+        .sidebar li a {
+            list-style: none;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: var(--tran-03);
+        }
+        .sidebar li a:hover {
+            background-color: var(--primary-color);
+        }
+        .sidebar li a:hover .icon,
+        .sidebar li a:hover .text {
+            color: var(--sidebar-color);
+        }
+        .sidebar li.active a {
+            background-color: var(--primary-color);
+        }
+        .sidebar li.active a .icon,
+        .sidebar li.active a .text {
+            color: var(--sidebar-color);
+        }
+
+        .sidebar .bottom-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 14px;
+        }
+        .sidebar .bottom-content .mode {
+            border-radius: 6px;
+            background: var(--primary-color-light);
+            position: relative;
+            transition: var(--tran-05);
+        }
+
+        .bottom-content .mode .sun-moon {
+            height: 20px;
+            width: 60px;
+        }
+        .mode .sun-moon i {
+            position: absolute;
+            transition: var(--tran-05);
+        }
+        .mode .sun-moon .moon {
+            opacity: 0;
+        }
+        body.dark .mode .sun-moon .moon {
+            opacity: 1;
+        }
+        body.dark .mode .sun-moon .sun {
+            opacity: 0;
+        }
+        .bottom-content .toggle-switch {
+            position: absolute;
+            right: 0;
+            height: 100%;
+            min-width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+        .toggle-switch .switch {
+            position: relative;
+            height: 22px;
+            width: 40px;
+            border-radius: 25px;
+            background: var(--toggle-color);
+        }
+        .switch::before {
+            content: '';
+            position: absolute;
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            background: var(--sidebar-color);
+            transition: var(--tran-05);
+        }
+        body.dark .switch::before {
+            left: 20px;
+        }
+
+        .home {
+            position: relative;
+            left: 250px;
+            width: calc(100% - 250px);
+            transition: var(--tran-05);
+            padding: 20px;
+        }
+        .sidebar.close ~ .home {
+            left: 88px;
+            width: calc(100% - 88px);
+        }
+        .page-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .page-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .page-title {
+            color: var(--text-color);
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            transition: var(--tran-03);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto auto;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--tran-03);
+            min-height: 150px;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .kpi-card {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+        .kpi-card .icon {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        .kpi-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+        .kpi-title {
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .large-card {
+            grid-column: 1 / span 3;
+        }
+        .small-card {
+            grid-column: 4 / span 1;
+        }
+
+        .chart-card {
+            background: var(--card-bg-lighter);
+        }
+        .chart-container {
+            height: 350px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 8px 0;
+            text-align: left;
+            color: var(--text-color);
+            font-size: 14px;
+            border-bottom: 1px solid var(--toggle-color);
+        }
+        th {
+            font-weight: 600;
+            opacity: 0.8;
+        }
+        
+        #colaboradores-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        #colaboradores-table th, 
+        #colaboradores-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border: 1px solid var(--toggle-color);
+            color: var(--text-color);
+            white-space: nowrap;
+        }
+
+        #colaboradores-table th {
+            background-color: var(--primary-color-light);
+            font-weight: 600;
+        }
+
+        .edit-action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary-color);
+            font-size: 16px;
+            margin: 0 5px;
+            padding: 5px;
+            transition: color 0.2s;
+        }
+        .edit-action-btn:hover {
+            color: #004c77;
+        }
+        
+        .edit-action-btn.delete-btn {
+            color: #dc3545;
+        }
+        .edit-action-btn.delete-btn:hover {
+            color: #b02a37;
+        }
+
+
+        .edit-input {
+            width: 100%;
+            min-width: 120px;
+            padding: 10px; /* Ajustado para melhor visualização fora da tabela */
+            border-radius: 8px; /* Ajustado para melhor visualização fora da tabela */
+            border: 1px solid var(--toggle-color); /* Ajustado para melhor visualização fora da tabela */
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-size: 14px;
+            transition: var(--tran-03);
+        }
+
+        .edit-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 98, 153, 0.2);
+        }
+
+
+        .profile-card {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--toggle-color);
+            margin-bottom: 20px;
+        }
+        .profile-image-container {
+            min-width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-color-light);
+            margin-right: 20px;
+            overflow: hidden;
+        }
+        .profile-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-icon-large {
+            font-size: 48px;
+            color: var(--primary-color);
+        }
+        .profile-details h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        .profile-details .role {
+            font-size: 16px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            margin-top: 5px;
+        }
+        .status.online { background-color: #00cc66; }
+        .status.ausente { background-color: #ffc107; }
+        .status.emreunião { background-color: #dc3545; }
+
+        .profile-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .info-item {
+            color: var(--text-color);
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .info-item i {
+            margin-right: 10px;
+            color: var(--primary-color);
+            min-width: 20px;
+        }
+        .info-item span {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: var(--tran-03);
+        }
+        .btn-primary:hover {
+            background-color: #004c77;
+        }
+        
+        /* Ajuste do botão secundário para o hover */
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color); /* CORRIGIDO: Agora sempre azul */
+            border: 1px solid var(--primary-color); /* CORRIGIDO: Agora sempre azul */
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: var(--tran-03);
+            display: inline-flex; /* Adicionado para alinhar o ícone */
+            align-items: center; /* Adicionado para alinhar o ícone */
+        }
+        .btn-secondary:hover {
+            background-color: var(--primary-color-light);
+            border-color: #004c77; /* Deixando o hover mais consistente com o primary */
+            color: #004c77; /* Deixando o hover mais consistente com o primary */
+        }
+
+        .edit-mode {
+            flex-direction: column;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        /* Mantido .login-input para campos normais, mas a estilização já é genérica */
+        /* .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--toggle-color);
+            background: var(--card-bg);
+            color: var(--text-color);
+            transition: var(--tran-03);
+        } */
+        
+        /* .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 98, 153, 0.2);
+        } */
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .analytics-card.large-chart {
+            grid-column: 1 / span 1;
+            min-height: 450px;
+        }
+        .chart-container-large {
+            height: 400px;
+            width: 100%;
+        }
+        .chart-description {
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.6;
             margin-bottom: 15px;
         }
 
-        .modal-content h3 {
-            color: var(--primary-color);
-            font-size: 1.6em;
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .ticket-number {
-            font-size: 2em;
-            font-weight: 800;
-            color: var(--error-color); /* Destaque em cor contrastante */
-            background-color: #e6ffff;
-            border: 2px solid var(--secondary-color);
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 8px;
-            margin: 15px 0 30px 0;
-            letter-spacing: 1px;
-        }
-
-        .modal-content p {
-            color: var(--text-color);
-            margin-bottom: 25px;
-            font-size: 1.1em;
-        }
-
-        .btn-modal-close {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.2s;
-        }
-
-        .btn-modal-close:hover {
-            background-color: #003057;
-        }
-
-        /* ESTILO BARRA DE ROLAGEM NO MODAL DE DESCRIÇÃO/DEVOLUTIVA */
-        #modal-description-content {
-            max-height: 250px; /* Limita a altura do campo */
-            overflow-y: auto;  /* Habilita a barra de rolagem vertical */
-            text-align: left; 
-            white-space: pre-wrap; 
-            word-break: break-word; 
-            font-size: 1em; 
-            background-color: var(--light-gray); 
-            padding: 15px; 
-            border-radius: 8px;
-            margin-bottom: 25px;
-        }
-        
-        .modal-actions { /* Estilos para alinhar botões no modal */
-            display: flex; 
-            justify-content: flex-end; 
+        .analytics-card.kpi-analytics {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-        }
-
-
-        /* --- ESTILOS DA TRACKING VIEW --- */
-        .search-options-info {
-            color: var(--medium-gray);
-            font-size: 0.9em;
-            margin-bottom: 20px;
-            display: block;
-            width: 100%; /* Ocupa a largura total para quebrar a linha */
-        }
-
-        /* Tabela de Resultados */
-        .results-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 0.9em;
-            text-align: left;
-            /* Mantendo a sombra na tabela, que agora ocupa toda a largura */
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-        }
-        .results-table th, .results-table td {
-            padding: 12px 15px;
-            border: 1px solid #e9ecef;
-        }
-        .results-table th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        .results-table tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        .results-table tr:hover {
-            background-color: #e9f5ff;
-            cursor: default; 
-        }
-        .status-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        .status-nao-analisada {
-            background-color: #ffc107;
-            color: #343a40;
-        }
-        .status-em-analise {
-            background-color: #0099a8;
-            color: white;
-        }
-        .status-concluido {
-            background-color: var(--success-color);
-            color: white;
-        }
-        #results-area .no-results {
-            padding: 30px;
             text-align: center;
-            color: var(--medium-gray);
-            font-style: italic;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            margin-top: 20px;
-            border: 1px solid #dee2e6;
+            background: var(--card-bg);
         }
 
-        .view-icon {
+        .analytics-card.kpi-analytics:nth-child(3) {
+            grid-row: 2;
+            grid-column: 2;
+        }
+
+        .chamados-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+            padding: 20px;
+        }
+        .chamados-options {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+        }
+        .chamado-option-card {
+            flex: 1;
+            max-width: 350px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            transition: transform 0.1s;
-        }
-        .view-icon:hover {
-            transform: scale(1.1);
-            color: var(--secondary-color);
-        }
-
-        @media (max-width: 1250px) {
-            /* Mantém o form de submissão responsivo */
-            #form-view .form-container {
-                max-width: 90%; 
-            }
+            text-align: center;
+            border: 1px solid var(--toggle-color);
         }
         
-        @media (max-width: 768px) {
-            .top-header, .breadcrumb {
-                padding: 15px 20px;
+        /* Estilos adicionais para os cards de chamado */
+        .icon-chamado {
+            font-size: 40px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        .chamado-option-card h3 {
+            font-size: 20px;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+        .chamado-option-card p {
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .chamado-option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .chamados-container .btn-secondary {
+            margin-top: 30px;
+        }
+
+        @media (max-width: 1000px) {
+            .login-left, .login-right {
+                width: 100%;
             }
-            .main-content {
-                padding: 40px 20px; /* Reduz padding em telas pequenas */
+            .login-left {
+                display: none;
             }
-            .main-content h2 {
-                font-size: 2em;
-                margin-bottom: 40px;
+            .sidebar {
+                width: 70px;
             }
-            .option-cards {
+            .sidebar.close {
+                width: 70px;
+            }
+            .sidebar .text {
+                display: none;
+            }
+            .home {
+                left: 70px;
+                width: calc(100% - 70px);
+            }
+            .sidebar.close ~ .home {
+                left: 70px;
+                width: calc(100% - 70px);
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .large-card, .small-card {
+                grid-column: 1 / span 1;
+            }
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+            .analytics-card.large-chart {
+                grid-column: 1 / span 1;
+            }
+            .analytics-card.kpi-analytics:nth-child(3) {
+                grid-row: auto;
+                grid-column: 1;
+            }
+            .profile-info-grid {
+                grid-template-columns: 1fr;
+            }
+            .chamados-options {
+                flex-direction: column;
                 gap: 20px;
             }
-            .card {
-                width: 100%; 
-                max-width: 450px;
-                padding: 30px 20px;
-            }
-            .form-container {
-                padding: 20px;
-            }
-            /* Garante que o container de tracking também se ajuste */
-             #tracking-view .form-container {
-                padding: 0;
-            }
-            
-            /* Ajuste para o container de busca em telas pequenas */
-            #tracking-search-container {
+            .chamado-option-card {
                 max-width: 100%;
-                padding: 20px 0;
-            }
-            /* AJUSTE PARA O FORM DE BUSCA RESPONSIVO */
-            #tracking-search-form {
-                flex-direction: column;
-                gap: 10px;
-                align-items: stretch;
-            }
-            #tracking-search-form button {
-                width: 100%;
-                height: auto;
-            }
-            .form-actions {
-                flex-direction: column-reverse; 
-                gap: 10px;
-                align-items: stretch;
-            }
-            .form-submit-buttons {
-                flex-direction: column;
-                width: 100%;
-            }
-            .btn {
-                width: 100%;
-                text-align: center;
-            }
-            .results-table th, .results-table td {
-                padding: 10px 5px; 
-                font-size: 0.75em;
-            }
-            
-            /* Ajuste dos botões do modal em tela pequena */
-            #description-modal .modal-actions {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .btn-copy {
-                margin-right: 0;
-                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-
-    <div class="top-header">
-        <h1>CHAMADOS SECRETARIA ACADÊMICA UNICESUMAR</h1>
-    </div>
-
-    <div class="breadcrumb">
-        <a href="#" onclick="showWelcome(); return false;">Solicitações - Secretaria Acadêmica</a> &gt; <span id="current-view-title">Solicitações</span>
-    </div>
-
-    <div class="main-content">
-        
-        <div id="welcome-view">
-            <h2>Olá, como podemos lhe ajudar?</h2>
-
-            <div class="option-cards">
-                <div class="card" id="send-ticket-card">
-                    <div class="card-icon">
-                        🎫
-                    </div>
-                    <div class="card-content">
-                        <h3>Enviar um novo chamado</h3>
-                        <p>Crie um novo ticket de suporte para o departamento certo.</p>
-                    </div>
-                </div>
-
-                <div class="card" id="track-ticket-card"> 
-                    <div class="card-icon">
-                        📢
-                    </div>
-                    <div class="card-content">
-                        <h3>Acompanhar meus chamados</h3>
-                        <p>Visualize o status, interaja com a equipe e confira o histórico de todos os tickets abertos.</p>
-                    </div>
-                </div>
+    <div id="login-screen">
+        <div class="login-left">
+            <div class="login-title-section">
+                <h1>Secretaria Acadêmica UniCesumar</h1>
+                <p>Simplifique e gerencie suas atividades da secretaria acadêmica de forma prática.</p>
             </div>
-
-            <div class="admin-link">
-                <a href="#">Ir ao painel administrativo</a>
+            <div class="login-logo-footer">
+                <img src="https://drive.google.com/thumbnail?id=1tGsJn0avJfaA7sD_xzLPMdq-Qef09oey&sz=w1000" alt="Logo UniCesumar">
             </div>
         </div>
-        
-        <div id="form-view" style="display: none;">
-            <div class="form-container">
-                <div class="form-header">
-                    <h2>Formulário para Registro de Solicitações</h2>
-                    <p>Preencha os campos abaixo com as informações necessárias para registrar seu novo chamado.</p>
+        <div class="login-right">
+            <div class="login-form-container">
+                <div class="login-logo-main">
+                    <img src="https://drive.google.com/thumbnail?id=1EUltwKz1nukLLZyM1QNTgqU4xqlxhk__&sz=w1000" alt="Logo">
                 </div>
-
-                <form id="request-form">
-                    
-                    <h3 class="form-section-title">DADOS DO SOLICITANTE</h3>
-
-                    <div class="form-group">
-                        <label for="nome" class="required">Nome do solicitante</label>
-                        <input type="text" id="nome" name="nome" required>
+                <h2>Seja bem-vindo(a)!</h2>
+                <form id="login-form">
+                    <div class="login-input-group">
+                        <input type="email" id="email" class="login-input" placeholder="E-mail" required>
                     </div>
-
-                    <div class="form-group">
-                        <label for="email" class="required">E-mail do solicitante</label>
-                        <input type="email" id="email" name="email" required placeholder="exemplo.sobrenome@vitru.com.br" oninput="validateEmail()">
-                        <p id="email-validation-msg" class="validation-message">O e-mail deve seguir o padrão nome.sobrenome@vitru.com.br.</p>
+                    <div class="login-input-group">
+                        <input type="password" id="password" class="login-input" placeholder="Senha" required>
+                        <i class="fa-solid fa-eye-slash toggle-password" id="togglePassword"></i>
                     </div>
-
-                    <div class="form-group">
-                        <label for="area" class="required">Área / Setor</label>
-                        <input type="text" id="area" name="area" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="gestor" class="required">Gestor responsável</label>
-                        <input type="text" id="gestor" name="gestor" required>
-                    </div>
-
-                    <h3 class="form-section-title">DETALHES DA SOLICITAÇÃO</h3>
-
-                    <div class="form-group">
-                        <label for="titulo" class="required">Título da solicitação</label>
-                        <input type="text" id="titulo" name="titulo" required>
-                    </div>
-
-                    
-                    <div class="form-group">
-                        <label for="tipo" class="required">Tipo da solicitação</label>
-                        <select id="tipo" name="tipo" required>
-                            <option value="" disabled selected>Selecione...</option>
-                            <option value="melhorias">MELHORIAS</option>
-                            <option value="problemas">PROBLEMAS</option>
-                            <option value="novo_projeto">NOVO PROJETO</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="impacto" class="required">Impacto da solicitação</label>
-                        <select id="impacto" name="impacto" required>
-                            <option value="" disabled selected>Selecione...</option>
-                            <option value="baixo">BAIXO</option>
-                            <option value="medio">MÉDIO</option>
-                            <option value="alto">ALTO</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="area_solicitacao" class="required">ÁREA para análise da solicitação</label>
-                        <select id="area_solicitacao" name="area_solicitacao" required>
-                            <option value="" disabled selected>Selecione...</option>
-                            <option value="bi">BUSINESS INTELLIGENCE</option>
-                            <option value="projetos">PROJETOS</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="descricao" class="required">Descrição detalhada do que precisa</label>
-                        <textarea id="descricao" name="descricao" required></textarea>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-back" onclick="showWelcome()">← Voltar</button>
-                        <div class="form-submit-buttons">
-                            <button type="submit" class="btn btn-primary" id="submit-button">Enviar Solicitação</button>
-                        </div>
-                    </div>
+                    <button type="submit" class="login-button">ENTRAR</button>
+                    <p id="login-message" style="color: red; margin-top: 15px; font-size: 14px;"></p>
                 </form>
+                <div class="login-actions">
+                    <a href="#">Esqueceu sua senha?</a>
+                    <a href="#">Primeiro acesso? Cadastre-se</a>
+                </div>
+            </div>
+            <div class="login-footer-links">
+                <a href="#">Ajuda e Suporte</a> | <a href="#">Termos de uso</a> | <a href="#">Política de privacidade</a>
+                <p>Uma navegação privada no Safari deve ser desativada. <a href="#">Saiba mais</a></p>
             </div>
         </div>
-
-        <div id="tracking-view" style="display: none;">
-            <div class="form-container">
-                <div class="form-header">
-                    <h2>Acompanhamento de Chamados</h2>
-                    <p>Use seu E-mail ou o Número do Chamado para buscar o status da sua solicitação.</p>
+    </div>
+    
+    <div id="main-content">
+        <nav class="sidebar close">
+            <header>
+                <div class="image-text">
+                    <span class="image">
+                        <img src="https://drive.google.com/thumbnail?id=1EUltwKz1nukLLZyM1QNTgqU4xqlxhk__&sz=w1000" alt="Logo">
+                    </span>
+                    <div class="text logo-text">
+                        <span class="name">Secretária</span>
+                        <span class="profession">Academica CSC</span>
+                    </div>
                 </div>
+                <i class="fa-solid fa-chevron-right toggle"></i>
+            </header>
+
+            <div class="menu-bar">
+                <div class="menu">
+                    <ul class="menu-links">
+                        <li class="nav-link active">
+                            <a href="#demanda">
+                                <i class="fa-solid fa-clipboard-list icon"></i>
+                                <span class="text nav-text">Demanda</span>
+                            </a>
+                        </li>
+                        <li class="nav-link">
+                            <a href="#cadastros">
+                                <i class="fa-solid fa-user-plus icon"></i>
+                                <span class="text nav-text">Cadastros</span>
+                            </a>
+                        </li>
+                        <li class="nav-link">
+                            <a href="#chamados">
+                                <i class="fa-solid fa-headset icon"></i>
+                                <span class="text nav-text">Chamados</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bottom-content">
+                    <li class="nav-link" id="logout-link">
+                        <a href="#">
+                            <i class="fa-solid fa-right-from-bracket icon"></i>
+                            <span class="text nav-text">Logout</span>
+                        </a>
+                    </li>
+
+                    <li class="mode">
+                        <div class="sun-moon">
+                            <i class="fa-solid fa-moon icon moon"></i>
+                            <i class="fa-solid fa-sun icon sun"></i>
+                        </div>
+                        <span class="mode-text text">Modo Escuro</span>
+
+                        <div class="toggle-switch">
+                            <span class="switch"></span>
+                        </div>
+                    </li>
+                </div>
+            </div>
+        </nav>
+
+        <section class="home">
+            <div id="demanda" class="page-section active">
+                <h1 class="page-title">Dashboard de Demandas</h1>
+                </div>
+
+            <div id="cadastros" class="page-section">
+                <h1 class="page-title">Gestão de Colaboradores</h1>
                 
-                <div id="tracking-search-container">
-                    <form id="tracking-search-form">
-                        <span class="search-options-info">Preencha um dos campos abaixo:</span>
-                        
-                        <div class="form-group">
-                            <label for="search-nm-chamado">N° CHAMADO</label>
-                            <input type="text" id="search-nm-chamado" name="nm_chamado" placeholder="Ex: 20250001">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="search-email">E-MAIL</label>
-                            <input type="email" id="search-email" name="email" placeholder="nome.sobrenome@vitru.com.br">
+                <div style="margin-bottom: 20px;">
+                    <button id="btn-show-cadastro" class="btn-primary">Novo Cadastro</button>
+                    <button id="btn-show-tabela" class="btn-secondary">Lista de Colaboradores Cadastrados</button>
+                </div>
+
+                <div id="form-novo-cadastro" class="card" style="max-width: 800px; margin: 0 auto;">
+                    <h3 class="card-title">Cadastrar Novo Colaborador</h3>
+                    <form id="cadastro-colaborador-form">
+                        <div class="profile-info-grid" style="grid-template-columns: 1fr 1fr;">
+                            <div class="form-group">
+                                <label for="cad-name">Nome Completo</label>
+                                <input type="text" id="cad-name" class="login-input" name="nome" placeholder="Nome Completo do Colaborador" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cad-email-vitru">Email Vitru</label>
+                                <input type="email" id="cad-email-vitru" class="login-input" name="email_vitru" placeholder="nome.sobrenome@vitru.com.br" required>
+                            </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" id="search-button">
-                            <span id="search-btn-text">Pesquisar</span>
-                        </button>
-                        
-                        <button type="button" class="btn btn-clear" id="clear-button" onclick="clearSearch()">
-                            Limpar
-                        </button>
+                        <div class="profile-info-grid">
+                            <div class="form-group">
+                                <label for="cad-celula">Célula</label>
+                                <select id="cad-celula" class="login-input" name="celula" required>
+                                    <option value="" disabled selected>Selecione a Célula</option>
+                                    <option value="EMISSÃO">EMISSÃO</option>
+                                    <option value="INGRESSO">INGRESSO</option>
+                                    <option value="VALIDAÇÃO">VALIDAÇÃO</option>
+                                    <option value="EDUCAÇÃO CONTINUADA">EDUCAÇÃO CONTINUADA</option>
+                                    <option value="DESENVOLVIMENTO & QUALIDADE">DESENVOLVIMENTO & QUALIDADE</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cad-cargo">Cargo</label>
+                                <select id="cad-cargo" class="login-input" name="cargo" required>
+                                    <option value="" disabled selected>Selecione o Cargo</option>
+                                    <option value="ANALISTA DE CSC JR">ANALISTA DE CSC JR</option>
+                                    <option value="ASSISTENTE DE CSC">ASSISTENTE DE CSC</option>
+                                    <option value="AUXILIAR ADMINISTRATIVO APRENDIZ">AUXILIAR ADMINISTRATIVO APRENDIZ</option>
+                                    <option value="SUPERVISOR DE CSC">SUPERVISOR DE CSC</option>
+                                    <option value="GERENTE DE CSC">GERENTE DE CSC</option>
+                                    <option value="ANALISTA DE CSC PL">ANALISTA DE CSC PL</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cad-nivel">Nível</label>
+                                <input type="text" id="cad-nivel" class="login-input" name="nivel" value="Preenchimento automático" readonly style="background-color: var(--toggle-color);">
+                            </div>
+                            <div class="form-group">
+                                <label for="cad-supervisor">Supervisor</label>
+                                <select id="cad-supervisor" class="login-input" name="supervisor" required>
+                                    <option value="" disabled selected>Selecione o Supervisor</option>
+                                    <option value="MARCUS STANDER">MARCUS STANDER</option>
+                                    <option value="ALINE KELLY CARRARA SILVA DUTRA">ALINE KELLY CARRARA SILVA DUTRA</option>
+                                    <option value="GUILHERME CANIATO">GUILHERME CANIATO</option>
+                                    <option value="LUAN HENRIQUE DE MIRANDA">LUAN HENRIQUE DE MIRANDA</option>
+                                    <option value="MAYARA APARECIDA DE PAULA">MAYARA APARECIDA DE PAULA</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cad-gerente">Gerente</label>
+                                <select id="cad-gerente" class="login-input" name="gerente" required>
+                                    <option value="" disabled selected>Selecione o Gerente</option>
+                                    <option value="MARCUS STANDER">MARCUS STANDER</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cad-status">Status</label>
+                                <select id="cad-status" class="login-input" name="status" required>
+                                    <option value="" disabled selected>Selecione o Status</option>
+                                    <option value="ATIVO">ATIVO</option>
+                                    <option value="INATIVO">INATIVO</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cad-password">Senha (Mín. 8 caracteres)</label>
+                                <div class="login-input-group" style="margin-bottom: 0;">
+                                    <input type="password" id="cad-password" class="login-input" name="password" minlength="8" required>
+                                    <i class="fa-solid fa-eye-slash toggle-password" id="toggleCadPassword"></i>
+                                </div>
+                            </div>
+                            
+                        </div>
 
-                        <button type="button" class="btn btn-back" onclick="showWelcome()">← Voltar</button>
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" id="btn-limpar-cadastro">Limpar</button>
+                            <button type="submit" class="btn-primary" id="btn-cadastrar">Cadastrar Colaborador</button>
+                        </div>
                     </form>
                 </div>
-                <h3 class="form-section-title" style="margin-top: 50px;">RESULTADOS DA BUSCA</h3>
-                <div id="results-area">
-                    <p class="no-results">Preencha o formulário e clique em Pesquisar para ver os resultados.</p>
+                
+                <div id="tabela-colaboradores-container" class="card" style="display: none;">
+                    <h3 class="card-title">Lista de Colaboradores Cadastrados</h3>
+                    
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <input type="text" id="search-colaboradores" placeholder="Pesquisar por Nome, E-mail, Célula, Cargo, etc..." class="edit-input">
+                    </div>
+                    <table id="colaboradores-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>E-mail Vitru</th>
+                                <th>Senha</th> <th>Célula</th>
+                                <th>Cargo</th>
+                                <th>Nível</th>
+                                <th>Supervisor</th>
+                                <th>Gerente</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
 
-    </div>
-
-    <div class="footer">
-        <div class="footer-content">
-            <div class="footer-copyright">
-                © 2025 Secretaria Acadêmica Unicesumar | Desenvolvimento e Qualidade | João Vitor Silvério
+            <div id="chamados" class="page-section">
+                <h1 class="page-title">Visualização de Chamados</h1>
+                <div class="chamados-container" style="min-height: auto;">
+                    <h2 style="font-size: 24px; color: var(--text-color); margin-bottom: 40px; font-weight: 500;">Olá, como podemos lhe ajudar?</h2>
+                    <div class="chamados-options">
+                        <div class="chamado-option-card">
+                            <i class="fa-solid fa-clipboard-list icon-chamado"></i>
+                            <h3>Abrir Novo Chamado</h3>
+                            <p>Registre um problema, solicitação ou dúvida para a equipe de suporte da Secretaria Acadêmica.</p>
+                        </div>
+                        <div class="chamado-option-card">
+                            <i class="fa-solid fa-clock-rotate-left icon-chamado"></i>
+                            <h3>Acompanhar Chamados</h3>
+                            <p>Visualize o status, interaja com a equipe e confira o histórico de todos os tickets abertos.</p>
+                        </div>
+                    </div>
+                    <button class="btn-secondary" style="margin-top: 30px; padding: 10px 30px;" onclick="alert('Ir ao Painel Administrativo');">
+                        <i class="fa-solid fa-gear" style="margin-right: 8px;"></i> Ir ao painel administrativo
+                    </button>
+                </div>
             </div>
-
-            <div class="footer-links">
-                <a href="#">Privacidade</a> | 
-                <a href="#">Termos de Uso</a> |
-                <a href="#">Ajuda</a>
-            </div>
-        </div>
-    </div>
-    
-    <div class="modal-overlay" id="success-modal">
-        <div class="modal-content">
-            <div class="modal-icon">✅</div>
-            <h3>Chamado Registrado com Sucesso!</h3>
-            <p>Anote o **número do seu chamado** para acompanhar o progresso:</p>
-            <div class="ticket-number" id="ticket-number-display"></div>
-            <button type="button" class="btn btn-modal-close" onclick="closeModal()">Entendi</button>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="description-modal">
-        <div class="modal-content">
-            <div class="modal-icon" style="font-size: 3em;">📄</div>
-            <h3>Detalhes do Chamado: <span id="modal-chamado-num"></span></h3>
-            <p style="font-weight: 600; font-size: 1.1em;" id="modal-content-type"></p> 
             
-            <p id="modal-description-content"></p>
-            
-            <div class="modal-actions">
-                <button type="button" class="btn btn-copy" id="copy-button" onclick="copyContent()">Copiar Conteúdo</button>
-                <button type="button" class="btn btn-modal-close" onclick="closeDescriptionModal()">Fechar</button>
-            </div>
-        </div>
+        </section>
     </div>
-    
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const welcomeView = document.getElementById('welcome-view');
-            const formView = document.getElementById('form-view');
-            const trackingView = document.getElementById('tracking-view'); 
-            const sendTicketCard = document.getElementById('send-ticket-card');
-            const trackTicketCard = document.getElementById('track-ticket-card'); 
-            const currentViewTitle = document.getElementById('current-view-title');
-            const requestForm = document.getElementById('request-form');
-            const emailInput = document.getElementById('email');
-            const emailValidationMsg = document.getElementById('email-validation-msg');
-            const successModal = document.getElementById('success-modal');
-            const ticketNumberDisplay = document.getElementById('ticket-number-display');
-            
-            // Variáveis do Tracking
-            const trackingSearchForm = document.getElementById('tracking-search-form');
-            const searchEmailInput = document.getElementById('search-email');
-            const searchNmChamadoInput = document.getElementById('search-nm-chamado');
-            const resultsArea = document.getElementById('results-area');
-            const searchButton = document.getElementById('search-button');
-            const searchBtnText = document.getElementById('search-btn-text');
-            
-            // Variável RESTAURADA para o botão de cópia
-            const copyButton = document.getElementById('copy-button');
-            
-            // URL da API de backend
-            // Certifique-se de que este IP e porta estejam corretos
-            const API_BASE_URL = 'http://10.32.2.219:3000/api/chamados'; 
+        const body = document.querySelector('body');
+        const sidebar = body.querySelector('nav');
+        const toggle = body.querySelector(".toggle");
+        const modeSwitch = body.querySelector(".toggle-switch");
+        const modeText = body.querySelector('.mode-text');
+        const navLinks = body.querySelectorAll('.nav-link a');
+        const pageSections = document.querySelectorAll('.page-section');
+        const mainContent = document.getElementById('main-content');
+        const loginScreen = document.getElementById('login-screen');
+        const loginForm = document.getElementById('login-form');
+        const loginMessage = document.getElementById('login-message');
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const btnShowCadastro = document.getElementById('btn-show-cadastro');
+        const btnShowTabela = document.getElementById('btn-show-tabela');
+        const formNovoCadastro = document.getElementById('form-novo-cadastro');
+        const tabelaColaboradoresContainer = document.getElementById('tabela-colaboradores-container');
+        const colaboradoresTableBody = document.querySelector('#colaboradores-table tbody');
+        const searchInput = document.getElementById('search-colaboradores'); 
+        
+        // NOVAS VARIÁVEIS PARA O NOVO CAMPO DE SENHA
+        const cadPasswordInput = document.getElementById('cad-password');
+        const toggleCadPassword = document.getElementById('toggleCadPassword');
+        
+        let isEditMode = {};
+        let allColaboradores = []; 
 
+        const nivelMapping = {
+            'ANALISTA DE CSC JR': 'NIVEL 3',
+            'ASSISTENTE DE CSC': 'NIVEL 2',
+            'AUXILIAR ADMINISTRATIVO APRENDIZ': 'NIVEL 1',
+            'SUPERVISOR DE CSC': 'NIVEL 5',
+            'GERENTE DE CSC': 'NIVEL 6',
+            'ANALISTA DE CSC PL': 'NIVEL 4'
+        };
 
-            // 1. Função para exibir a tela de boas-vindas
-            window.showWelcome = () => {
-                welcomeView.style.display = 'block';
-                formView.style.display = 'none';
-                trackingView.style.display = 'none'; 
-                currentViewTitle.textContent = 'Solicitações';
-                document.querySelector('.main-content h2').textContent = 'Olá, como podemos lhe ajudar?';
-            };
+        const API_BASE_URL = 'http://10.32.2.219:3000';
+        let userData = {};
+        let demandasChartInstance = null;
 
-            // 2. Função para exibir o formulário de registro
-            const showForm = () => {
-                welcomeView.style.display = 'none';
-                formView.style.display = 'block';
-                trackingView.style.display = 'none'; 
-                currentViewTitle.textContent = 'Novo Chamado';
-                document.querySelector('.main-content h2').textContent = ''; 
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            };
+        // --- NOVO CÓDIGO: NÍVEIS DE ACESSO PARA CADASTROS ---
+        const CADASTROS_REQUIRED_LEVELS = ['NIVEL 4', 'NIVEL 5', 'NIVEL 6'];
+        // --------------------------------------------------
 
-            // 3. Função para exibir a tela de acompanhamento (Limpa a busca ao entrar)
-            window.showTracking = () => {
-                welcomeView.style.display = 'none';
-                formView.style.display = 'none';
-                trackingView.style.display = 'block'; 
-                currentViewTitle.textContent = 'Acompanhamento';
-                document.querySelector('.main-content h2').textContent = ''; 
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                // Limpa a busca ao entrar na tela
-                clearSearch(); 
-            };
-            
-            // Eventos de clique nos Cards
-            sendTicketCard.addEventListener('click', showForm);
-            trackTicketCard.addEventListener('click', showTracking); 
+        // --- FUNÇÕES GERAIS DE UI ---
 
+        // Toggle Sidebar
+        if (toggle) {
+            toggle.addEventListener("click", () => {
+                sidebar.classList.toggle("close");
+            });
+        }
 
-            // --- Funções do Modal de Sucesso ---
-            window.showModal = (ticketNumber) => {
-                ticketNumberDisplay.textContent = ticketNumber;
-                successModal.classList.add('is-visible');
-            };
-
-            window.closeModal = () => {
-                successModal.classList.remove('is-visible');
-                requestForm.reset(); 
-                showWelcome(); 
-            };
-            // ---------------------------------
-            
-            // --- Funções do Modal de Descrição (Observação e Devolutiva) ---
-            window.showDescriptionModal = (chamadoNum, description, type) => {
-                document.getElementById('modal-chamado-num').textContent = chamadoNum;
-                document.getElementById('modal-content-type').textContent = type; 
-                document.getElementById('modal-description-content').textContent = description;
-                
-                // Reseta o texto do botão de copiar ao abrir o modal
-                copyButton.textContent = 'Copiar Conteúdo';
-                copyButton.disabled = false;
-                
-                document.getElementById('description-modal').classList.add('is-visible');
-            };
-
-            window.closeDescriptionModal = () => {
-                document.getElementById('description-modal').classList.remove('is-visible');
-            };
-            
-            // Função para Copiar o Conteúdo do Modal
-            window.copyContent = async () => {
-                const contentElement = document.getElementById('modal-description-content');
-                const content = contentElement.textContent;
-                
-                try {
-                    await navigator.clipboard.writeText(content);
-                    copyButton.textContent = 'Copiado! ✅';
-                    copyButton.disabled = true;
-                    // Volta ao normal após 2 segundos
-                    setTimeout(() => {
-                        copyButton.textContent = 'Copiar Conteúdo';
-                        copyButton.disabled = false;
-                    }, 2000);
-                } catch (err) {
-                    console.error('Falha ao copiar o conteúdo:', err);
-                    alert('Erro ao copiar o conteúdo para a área de transferência. Tente selecionar o texto manualmente.');
-                    copyButton.textContent = 'Erro! ❌';
-                }
-            };
-            // ---------------------------------
-
-
-            // 4. Validação de Email para Registro
-            window.validateEmail = () => {
-                const email = emailInput.value.trim();
-                const regex = /^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*@vitru\.com\.br$/i; 
-
-                if (email === '') {
-                    emailValidationMsg.style.display = 'none';
-                    emailInput.setCustomValidity(''); 
-                    return true;
-                } else if (!regex.test(email)) {
-                    emailValidationMsg.style.display = 'block';
-                    emailInput.setCustomValidity('E-mail inválido. Utilize o formato nome.sobrenome@vitru.com.br');
-                    return false;
+        // Toggle Dark/Light Mode
+        if (modeSwitch) {
+            modeSwitch.addEventListener("click", () => {
+                body.classList.toggle("dark");
+                localStorage.setItem("mode", body.classList.contains("dark") ? "dark" : "light");
+                if (body.classList.contains("dark")) {
+                    modeText.innerText = "Modo Claro";
                 } else {
-                    emailValidationMsg.style.display = 'none';
-                    emailInput.setCustomValidity('');
-                    return true;
+                    modeText.innerText = "Modo Escuro";
                 }
-            };
-            
+            });
+        }
 
-            // 5. Tratamento do Submit do Formulário de REGISTRO
-            requestForm.addEventListener('submit', async function(e) {
+        // Apply saved mode
+        if (localStorage.getItem("mode") === "dark") {
+            body.classList.add("dark");
+            modeText.innerText = "Modo Claro";
+        } else {
+            body.classList.remove("dark");
+            modeText.innerText = "Modo Escuro";
+        }
+
+        // Navegação
+        navLinks.forEach(link => {
+            link.addEventListener('click', e => {
                 e.preventDefault();
                 
-                if (!validateEmail() || !requestForm.checkValidity()) {
-                    if (!validateEmail()) emailInput.focus();
-                    return; 
+                const targetHref = link.getAttribute('href'); 
+                
+                // --- INÍCIO: VERIFICAÇÃO DE ACESSO PARA CADASTROS (NIVEL 4, 5, 6) ---
+                if (targetHref === '#cadastros') {
+                    // Verifica se o userData existe e se o NIVEL está definido e não está nos níveis permitidos
+                    if (userData && userData.NIVEL && !CADASTROS_REQUIRED_LEVELS.includes(userData.NIVEL)) {
+                        alert("VOCÊ NÃO TEM ACESSO PARA ESTE CANAL");
+                        return; // Impede a navegação
+                    }
+                }
+                // --- FIM: VERIFICAÇÃO DE ACESSO ---
+                
+                pageSections.forEach(section => section.classList.remove('active'));
+                document.querySelectorAll('.nav-link').forEach(item => item.classList.remove('active'));
+                
+                link.parentElement.classList.add('active');
+                const targetSection = document.querySelector(targetHref);
+                
+                if (targetSection) targetSection.classList.add('active');
+                
+                if (targetHref === '#cadastros') {
+                    toggleCadastroView(false); 
                 }
                 
-                const submitBtn = document.getElementById('submit-button');
-                submitBtn.textContent = 'Enviando...';
-                submitBtn.disabled = true;
+                if (targetHref === '#demanda') {
+                    renderDemandasChart();
+                }
+            });
+        });
+
+
+        // Inicialização de página após login
+        function initializePage() {
+            const defaultSectionId = '#demanda';
+            const defaultSection = document.querySelector(defaultSectionId);
+            if (defaultSection) {
+                document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
+                document.querySelectorAll('.nav-link').forEach(item => item.classList.remove('active'));
                 
-                const formData = new FormData(this);
-                const data = Object.fromEntries(formData.entries());
+                defaultSection.classList.add('active');
+                document.querySelector(`.nav-link a[href="${defaultSectionId}"]`).parentElement.classList.add('active');
+                
+                renderDemandasChart();
+            }
+        }
+
+        // --- FUNÇÕES DE LOGIN ---
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            loginMessage.textContent = 'Autenticando...';
+            loginMessage.style.color = '#006299';
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email, password: password }),
+                });
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    userData = data.userData;
+                    console.log('Login realizado com sucesso. Dados do usuário:', userData);
+                    loginMessage.textContent = 'Login realizado com sucesso!';
+                    loginMessage.style.color = '#00cc66';
+                    setTimeout(() => {
+                        loginScreen.classList.add('hidden');
+                        mainContent.classList.add('logged-in');
+                        initializePage();
+                    }, 500);
+                } else {
+                    loginMessage.textContent = data.message || 'Erro de autenticação. Verifique suas credenciais.';
+                    loginMessage.style.color = 'red';
+                }
+            } catch (error) {
+                console.error('Erro de conexão ao fazer login:', error);
+                loginMessage.textContent = 'Erro de conexão: Não foi possível alcançar o servidor da API.';
+                loginMessage.style.color = 'red';
+            }
+        }
+
+        if (loginForm) {
+            loginForm.addEventListener('submit', handleLogin);
+        }
+
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', () => {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                togglePassword.classList.toggle('fa-eye');
+                togglePassword.classList.toggle('fa-eye-slash');
+            });
+        }
+        
+        // NOVO TOGGLE PARA O CAMPO DE SENHA EM CADASTROS
+        if (toggleCadPassword && cadPasswordInput) {
+            toggleCadPassword.addEventListener('click', () => {
+                const type = cadPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                cadPasswordInput.setAttribute('type', type);
+                toggleCadPassword.classList.toggle('fa-eye');
+                toggleCadPassword.classList.toggle('fa-eye-slash');
+            });
+        }
+
+        const logoutLink = document.getElementById('logout-link');
+        if (logoutLink) {
+            logoutLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                userData = {};
+                mainContent.classList.remove('logged-in');
+                loginScreen.classList.remove('hidden');
+                loginMessage.textContent = '';
+                window.location.hash = '';
+                if (demandasChartInstance) {
+                    demandasChartInstance.destroy();
+                    demandasChartInstance = null;
+                }
+            });
+        }
+        
+        // --- FUNÇÕES DE CADASTRO E LISTAGEM ---
+
+        function toggleCadastroView(showTable = false) {
+            if (showTable) {
+                formNovoCadastro.style.display = 'none';
+                tabelaColaboradoresContainer.style.display = 'block';
+                btnShowCadastro.classList.remove('btn-primary');
+                btnShowCadastro.classList.add('btn-secondary');
+                btnShowTabela.classList.remove('btn-secondary');
+                btnShowTabela.classList.add('btn-primary');
+                fetchColaboradores();
+            } else {
+                formNovoCadastro.style.display = 'block';
+                tabelaColaboradoresContainer.style.display = 'none';
+                btnShowCadastro.classList.remove('btn-secondary');
+                btnShowCadastro.classList.add('btn-primary');
+                btnShowTabela.classList.remove('btn-primary');
+                btnShowTabela.classList.add('btn-secondary');
+            }
+        }
+
+        if (btnShowCadastro) {
+            btnShowCadastro.addEventListener('click', () => toggleCadastroView(false));
+        }
+
+        if (btnShowTabela) {
+            btnShowTabela.addEventListener('click', () => toggleCadastroView(true));
+        }
+
+        async function fetchColaboradores() {
+            colaboradoresTableBody.innerHTML = '<tr><td colspan="11" style="text-align: center;"><i class="fa-solid fa-spinner fa-spin"></i> Carregando dados...</td></tr>'; 
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/colaboradores`);
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    allColaboradores = data.colaboradores; 
+                    renderColaboradoresTable(allColaboradores);
+                    if(searchInput) searchInput.value = ''; 
+                } else {
+                    colaboradoresTableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: red;">Erro ao carregar colaboradores: ${data.message || 'Erro desconhecido'}</td></tr>`;
+                }
+            } catch (error) {
+                console.error('Erro na requisição de colaboradores:', error);
+                colaboradoresTableBody.innerHTML = '<tr><td colspan="11" style="text-align: center; color: red;">Erro de conexão com o servidor da API.</td></tr>';
+            }
+        }
+
+        function renderColaboradoresTable(colaboradores) {
+            colaboradoresTableBody.innerHTML = '';
+            if (colaboradores.length === 0) {
+                colaboradoresTableBody.innerHTML = '<tr><td colspan="11" style="text-align: center;">Nenhum colaborador encontrado.</td></tr>';
+                return;
+            }
+
+            colaboradores.forEach(colaborador => {
+                const tr = document.createElement('tr');
+                tr.id = `colaborador-row-${colaborador.ID}`;
+                tr.innerHTML = `
+                    <td data-field="id">${colaborador.ID}</td>
+                    <td data-field="nome">${colaborador.NOME}</td>
+                    <td data-field="email_vitru">${colaborador.EMAIL_VITRU}</td>
+                    <td data-field="senha">******</td> <td data-field="celula">${colaborador.CELULA}</td>
+                    <td data-field="cargo">${colaborador.CARGO}</td>
+                    <td data-field="nivel">${colaborador.NIVEL}</td>
+                    <td data-field="supervisor">${colaborador.SUPERVISOR}</td>
+                    <td data-field="gerente">${colaborador.GERENTE}</td>
+                    <td data-field="status">${colaborador.STATUS}</td>
+                    <td class="action-cell">
+                        <button class="edit-action-btn save-btn" style="display: none;" onclick="handleSaveEdit(${colaborador.ID})"><i class="fa-solid fa-floppy-disk"></i></button>
+                        <button class="edit-action-btn cancel-btn" style="display: none;" onclick="toggleEditMode(${colaborador.ID})"><i class="fa-solid fa-xmark"></i></button>
+                        <button class="edit-action-btn edit-btn" onclick="toggleEditMode(${colaborador.ID})"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button class="edit-action-btn delete-btn" onclick="handleDeleteColaborador(${colaborador.ID})"><i class="fa-solid fa-trash-can"></i></button>
+                    </td>
+                `;
+                colaboradoresTableBody.appendChild(tr);
+            });
+        }
+        
+        function filterColaboradores() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const rows = colaboradoresTableBody.querySelectorAll('tr');
+
+            rows.forEach(row => {
+                if (row.querySelector('td[colspan="11"]')) {
+                    return;
+                }
+                
+                let rowText = '';
+                Array.from(row.querySelectorAll('td:not(.action-cell)')).forEach(cell => {
+                    if (cell.dataset.field !== 'senha') {
+                        rowText += cell.textContent.toLowerCase() + ' ';
+                    }
+                });
+
+                if (rowText.includes(searchTerm)) {
+                    row.style.display = ''; 
+                } else {
+                    row.style.display = 'none'; 
+                }
+            });
+        }
+        
+        if (searchInput) {
+            searchInput.addEventListener('keyup', filterColaboradores);
+            searchInput.addEventListener('input', filterColaboradores); 
+        }
+
+        async function handleDeleteColaborador(id) {
+            if (!confirm(`Tem certeza que deseja EXCLUIR o colaborador com ID ${id}?`)) {
+                return;
+            }
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/delete-colaborador/${id}`, {
+                    method: 'DELETE',
+                });
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    alert('Colaborador excluído com sucesso!');
+                    fetchColaboradores();
+                } else {
+                    alert(`Erro ao excluir: ${data.message || 'Ocorreu um erro desconhecido.'}`);
+                }
+            } catch (error) {
+                console.error('Erro de conexão ao excluir:', error);
+                alert('Erro de conexão com o servidor da API.');
+            }
+        }
+
+        function toggleEditMode(id) {
+            const row = document.getElementById(`colaborador-row-${id}`);
+            if (!row) return;
+
+            const editableFields = ['nome', 'email_vitru', 'senha', 'celula', 'cargo', 'nivel', 'supervisor', 'gerente', 'status'];
+            const cells = Array.from(row.querySelectorAll('td')).filter(cell => editableFields.includes(cell.dataset.field));
+
+            const actionCell = row.querySelector('td:last-child');
+            let isEditing = isEditMode[id];
+
+            if (isEditing) {
+                fetchColaboradores();
+                isEditMode[id] = false;
+                return;
+            }
+
+            cells.forEach(cell => {
+                const field = cell.dataset.field;
+                const currentValue = cell.textContent;
+                let inputElement;
+
+                if (field === 'celula' || field === 'cargo' || field === 'supervisor' || field === 'gerente' || field === 'status') {
+                    inputElement = document.createElement('select');
+                    inputElement.className = 'edit-input';
+                    inputElement.name = field;
+                    
+                    let options;
+                    switch (field) {
+                        case 'celula': 
+                            options = ['EMISSÃO', 'INGRESSO', 'VALIDAÇÃO', 'EDUCAÇÃO CONTINUADA', 'DESENVOLVIMENTO & QUALIDADE']; 
+                            break;
+                        case 'cargo': 
+                            options = ['ANALISTA DE CSC JR', 'ASSISTENTE DE CSC', 'AUXILIAR ADMINISTRATIVO APRENDIZ', 'SUPERVISOR DE CSC', 'GERENTE DE CSC', 'ANALISTA DE CSC PL']; 
+                            break;
+                        case 'supervisor': 
+                            options = ['ALINE KELLY CARRARA SILVA DUTRA', 'GUILHERME CANIATO', 'LUAN HENRIQUE DE MIRANDA', 'MAYARA APARECIDA DE PAULA', 'MARCUS STANDER']; 
+                            break;
+                        case 'gerente': 
+                            options = ['MARCUS STANDER']; 
+                            break;
+                        case 'status': 
+                            options = ['ATIVO', 'INATIVO']; 
+                            break;
+                    }
+
+                    options.forEach(opt => {
+                        const option = document.createElement('option');
+                        option.value = opt;
+                        option.textContent = opt;
+                        if (opt === currentValue) {
+                            option.selected = true;
+                        }
+                        inputElement.appendChild(option);
+                    });
+                    
+                    if (field === 'cargo') {
+                        inputElement.onchange = () => {
+                            const newCargo = inputElement.value;
+                            const nivelCell = row.querySelector('td[data-field="nivel"]');
+                            const nivelInput = nivelCell.querySelector('.edit-input');
+                            if (nivelInput) {
+                                nivelInput.value = nivelMapping[newCargo] || 'Nível não definido';
+                            }
+                        };
+                    }
+
+                } else { 
+                    inputElement = document.createElement('input');
+                    inputElement.className = 'edit-input';
+                    inputElement.name = field;
+                    
+                    if (field === 'senha') {
+                        inputElement.type = 'text'; 
+                        inputElement.placeholder = 'Preencha para alterar a senha';
+                        inputElement.value = ''; 
+                        inputElement.setAttribute('minlength', '8'); 
+                    } else if (field === 'email_vitru') {
+                        inputElement.type = 'email';
+                        inputElement.value = currentValue;
+                        inputElement.required = true;
+                    } else {
+                        inputElement.type = 'text'; 
+                        inputElement.value = currentValue;
+                    }
+
+                    if(field === 'nivel') {
+                        inputElement.readOnly = true;
+                        inputElement.style.backgroundColor = 'var(--toggle-color)';
+                    }
+                }
+
+                cell.textContent = '';
+                cell.appendChild(inputElement);
+            });
+
+            row.classList.add('editing');
+            actionCell.querySelector('.edit-btn').style.display = 'none';
+            actionCell.querySelector('.delete-btn').style.display = 'none';
+            actionCell.querySelector('.save-btn').style.display = 'inline-block';
+            actionCell.querySelector('.cancel-btn').style.display = 'inline-block';
+
+            isEditMode[id] = true;
+        }
+
+        async function handleSaveEdit(id) {
+            const row = document.getElementById(`colaborador-row-${id}`);
+            const inputs = row.querySelectorAll('.edit-input');
+            const updatedData = {
+                nome: '', email_vitru: '', celula: '', cargo: '', nivel: '', supervisor: '', gerente: '', status: '',
+                password: null 
+            };
+            
+            inputs.forEach(input => {
+                const field = input.name;
+                const value = input.value;
+                
+                if (field === 'senha') {
+                    if (value.trim() !== '') {
+                        updatedData.password = value; 
+                    }
+                } else {
+                    updatedData[field] = value;
+                }
+            });
+
+            if (updatedData.password && updatedData.password.length < 8) {
+                alert('A nova senha deve ter no mínimo 8 caracteres.');
+                return;
+            }
+            
+            const requiredFields = ['nome', 'email_vitru', 'celula', 'cargo', 'nivel', 'supervisor', 'gerente', 'status']; 
+            if (requiredFields.some(field => !updatedData[field])) {
+                alert('Por favor, preencha todos os campos obrigatórios (Nome, E-mail Vitru, Célula, Cargo, Nível, Supervisor, Gerente, Status).');
+                return;
+            }
+
+            const actionCell = row.querySelector('td:last-child');
+            const originalActionHTML = actionCell.innerHTML;
+            actionCell.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; 
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/update-colaborador/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updatedData),
+                });
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    alert('Colaborador atualizado com sucesso!');
+                    fetchColaboradores();
+                    isEditMode[id] = false;
+                } else {
+                    alert(`Erro ao atualizar: ${data.message || 'Ocorreu um erro desconhecido.'}`);
+                    actionCell.innerHTML = originalActionHTML; 
+                }
+
+            } catch (error) {
+                console.error('Erro de conexão ao salvar:', error);
+                alert('Erro de conexão com o servidor da API.');
+                actionCell.innerHTML = originalActionHTML; 
+            }
+        }
+
+
+        // --- FUNÇÕES DE CADASTRO (Continuação) ---
+        const cargoSelect = document.getElementById('cad-cargo');
+        const nivelInput = document.getElementById('cad-nivel');
+        const cadastroForm = document.getElementById('cadastro-colaborador-form');
+        const btnLimparCadastro = document.getElementById('btn-limpar-cadastro');
+
+        if (cargoSelect && nivelInput) {
+            cargoSelect.addEventListener('change', () => {
+                const selectedCargo = cargoSelect.value;
+                nivelInput.value = nivelMapping[selectedCargo] || 'Nível não definido';
+            });
+        }
+        
+        if (btnLimparCadastro && cadastroForm) {
+            btnLimparCadastro.addEventListener('click', () => {
+                cadastroForm.reset();
+                document.getElementById('cad-nivel').value = 'Preenchimento automático';
+            });
+        }
+        
+        if (cadastroForm) {
+            cadastroForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const formData = {
+                    nome: document.getElementById('cad-name').value,
+                    email_vitru: document.getElementById('cad-email-vitru').value,
+                    celula: document.getElementById('cad-celula').value,
+                    cargo: document.getElementById('cad-cargo').value,
+                    nivel: nivelInput.value,
+                    supervisor: document.getElementById('cad-supervisor').value,
+                    gerente: document.getElementById('cad-gerente').value,
+                    status: document.getElementById('cad-status').value,
+                    password: document.getElementById('cad-password').value, 
+                };
+
+                const submitButton = document.getElementById('btn-cadastrar');
+                const originalButtonText = submitButton.textContent;
+                submitButton.textContent = 'Cadastrando...';
+                submitButton.disabled = true;
 
                 try {
-                    const response = await fetch(API_BASE_URL, {
+                    const response = await fetch(`${API_BASE_URL}/api/register-colaborador`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify(data),
+                        body: JSON.stringify(formData),
                     });
 
-                    const result = await response.json();
+                    const data = await response.json();
 
                     if (response.ok) {
-                        // CHAMA O MODAL/POP-UP AQUI
-                        console.log('SUCESSO: Chamado registrado com sucesso!', result);
-                        if (result.nm_chamado) {
-                            showModal(result.nm_chamado);
-                        } else {
-                            alert('SUCESSO: Chamado registrado, mas o número não foi retornado.');
+                        alert(`Sucesso! ${data.message}`);
+                        cadastroForm.reset();
+                        document.getElementById('cad-nivel').value = 'Preenchimento automático';
+                        
+                        if (tabelaColaboradoresContainer.style.display !== 'none') {
+                            fetchColaboradores();
                         }
                     } else {
-                        alert('ERRO ao enviar o chamado: ' + result.message + (result.details ? '\nDetalhes: ' + result.details : ''));
-                        console.error('ERRO:', result.message, result.details);
+                        alert(`Erro no Cadastro: ${data.message || 'Ocorreu um erro desconhecido.'}`);
                     }
 
                 } catch (error) {
-                    alert('ERRO de conexão com o servidor. Verifique se o backend (Node.js) está rodando em http://10.32.2.219:3000.');
-                    console.error('ERRO de rede:', error);
+                    console.error('Erro ao conectar com a API de Cadastro:', error);
+                    alert('Erro de conexão: Não foi possível alcançar o servidor da API.');
                 } finally {
-                    submitBtn.textContent = 'Enviar Solicitação';
-                    submitBtn.disabled = false;
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
                 }
             });
+        }
+        
+        // --- FUNÇÕES DO GRÁFICO (DASHBOARD) ---
+        function renderDemandasChart() {
+            const ctx = document.getElementById('demandasChart');
+            if (!ctx) return;
             
-            // Fechar o modal de sucesso ao clicar no overlay
-            successModal.addEventListener('click', (e) => {
-                if (e.target.id === 'success-modal') {
-                    closeModal();
-                }
-            });
-            
-            // Fechar o modal de descrição ao clicar no overlay
-            document.getElementById('description-modal').addEventListener('click', (e) => {
-                if (e.target.id === 'description-modal') {
-                    closeDescriptionModal();
-                }
-            });
-
-            // NOVO: Função para limpar a pesquisa e a área de resultados
-            window.clearSearch = () => {
-                searchNmChamadoInput.value = '';
-                searchEmailInput.value = '';
-                resultsArea.innerHTML = '<p class="no-results">Preencha o formulário e clique em Pesquisar para ver os resultados.</p>';
-                searchNmChamadoInput.focus(); 
-            };
-
-            // 6. Tratamento do Submit do Formulário de BUSCA 
-            trackingSearchForm.addEventListener('submit', handleSearch);
-
-            async function handleSearch(e) {
-                e.preventDefault();
-                
-                const nmChamado = searchNmChamadoInput.value.trim();
-                const email = searchEmailInput.value.trim();
-                let searchParam = '';
-                let isValid = false;
-
-                if (nmChamado) {
-                    searchParam = `nm_chamado=${nmChamado}`;
-                    isValid = true;
-                } else if (email) {
-                    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                    if (emailRegex.test(email)) {
-                         searchParam = `email=${email}`;
-                         isValid = true;
-                    } else {
-                         alert('Por favor, insira um endereço de e-mail válido para busca.');
-                         searchEmailInput.focus();
-                         return;
-                    }
-                }
-
-                if (!isValid) {
-                    alert('Por favor, preencha o N° CHAMADO ou o E-MAIL para realizar a pesquisa.');
-                    return;
-                }
-                
-                searchBtnText.textContent = 'Buscando...';
-                searchButton.disabled = true;
-                resultsArea.innerHTML = ''; // Limpa resultados anteriores
-
-                try {
-                    const response = await fetch(`${API_BASE_URL}/search?${searchParam}`);
-                    
-                    if (response.status === 404) {
-                        resultsArea.innerHTML = '<p class="no-results">Nenhum chamado encontrado para o critério de busca fornecido.</p>';
-                        return;
-                    }
-
-                    if (!response.ok) {
-                        const errorResult = await response.json();
-                        throw new Error(errorResult.message || 'Erro desconhecido ao buscar dados.');
-                    }
-
-                    const chamados = await response.json();
-                    displayResults(chamados);
-
-                } catch (error) {
-                    resultsArea.innerHTML = `<p class="no-results" style="color: var(--error-color);">Erro na busca: ${error.message}</p>`;
-                    console.error('Erro na busca de chamados:', error);
-                } finally {
-                    searchBtnText.textContent = 'Pesquisar';
-                    searchButton.disabled = false;
-                }
+            if (demandasChartInstance) {
+                demandasChartInstance.destroy();
             }
 
-            // 7. Função para exibir os resultados na tabela
-            function displayResults(chamados) {
-                let html = '<table class="results-table"><thead><tr><th>N° Chamado</th><th>Título</th><th>Data Abertura</th><th>Status Atual</th><th>E-mail Solicitante</th><th>Observação</th><th>Devolutiva</th><th>Data Conclusão</th></tr></thead><tbody>';
+            // O conteúdo da seção "Demanda" foi removido
+        }
 
-                chamados.forEach(chamado => {
-                    const statusClass = chamado.status_atual 
-                        ? chamado.status_atual.toLowerCase().replace(/ /g, '-') 
-                        : 'status-nao-analisada'; // Sanitize status
-                    
-                    const formattedDate = chamado.data_abertura 
-                        ? new Date(chamado.data_abertura).toLocaleDateString('pt-BR') 
-                        : 'N/A';
-                        
-                    const formattedConclusionDate = (chamado.data_conclusão && chamado.data_conclusão.trim() !== '')
-                        ? new Date(chamado.data_conclusão).toLocaleDateString('pt-BR')
-                        : '-';
-                    
-                    // Escapa a descrição e a devolutiva para uso seguro no onclick
-                    const escapedDescription = chamado.descricao ? chamado.descricao.replace(/`/g, '\\`') : 'Nenhuma descrição fornecida.';
-                    const obsIcon = `<span class="view-icon" onclick="showDescriptionModal('${chamado.nm_chamado}', \`${escapedDescription}\`, 'Descrição:')" title="Ver Descrição">👁️</span>`;
 
-                    let devolutivaCellContent = '-'; 
-                    if (chamado.devolutiva && chamado.devolutiva.trim() !== '') {
-                        const escapedDevolutiva = chamado.devolutiva.replace(/`/g, '\\`');
-                        devolutivaCellContent = `<span class="view-icon" onclick="showDescriptionModal('${chamado.nm_chamado}', \`${escapedDevolutiva}\`, 'Devolutiva:')" title="Ver Devolutiva">👁️</span>`;
-                    }
-                    
-                    html += `
-                        <tr>
-                            <td>${chamado.nm_chamado}</td>
-                            <td>${chamado.titulo}</td>
-                            <td>${formattedDate}</td>
-                            <td><span class="status-badge status-${statusClass}">${chamado.status_atual}</span></td>
-                            <td>${chamado.email_solicitante}</td>
-                            <td style="text-align: center;">${obsIcon}</td>
-                            <td style="text-align: center;">${devolutivaCellContent}</td>
-                            <td>${formattedConclusionDate}</td> 
-                        </tr>
-                    `;
-                });
+        // --- INICIALIZAÇÃO ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Garante que o usuário veja a tela de login ao carregar a página
+            mainContent.classList.remove('logged-in'); 
+            loginScreen.classList.remove('hidden');
 
-                html += '</tbody></table>';
-                resultsArea.innerHTML = html;
+            // Se o hash for '#cadastros' ao carregar, tenta exibir 'Novo Cadastro', conforme solicitado
+            if (window.location.hash === '#cadastros') {
+                toggleCadastroView(false); 
             }
         });
     </script>
